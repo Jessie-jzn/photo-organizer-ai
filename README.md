@@ -24,14 +24,15 @@
 ### 方法一：直接使用可执行文件（推荐）
 
 1. 从 [Releases](https://github.com/Jessie-jzn/photo-organizer-ai/releases) 页面下载最新版本
+
    - Windows 用户下载 `PhotoOrganizer.exe`
    - macOS 用户下载 `PhotoOrganizer.app.zip`
-
 2. 运行程序
+
    - Windows：双击 `PhotoOrganizer.exe`
    - macOS：解压后双击 `PhotoOrganizer.app`
-
 3. 在程序界面中：
+
    - 点击"浏览"选择源文件夹（包含要整理的照片的文件夹）
    - 可选：选择目标文件夹（整理后的照片存放位置）
    - 根据需要调整选项：
@@ -76,6 +77,7 @@ python src/main.py --source "源文件夹路径" --dest "目标文件夹路径" 
 ```
 
 命令行选项：
+
 - `--source`: 源文件夹路径（必需）
 - `--dest`: 目标文件夹路径（可选）
 - `--skip_country`: 跳过国家分类
@@ -129,15 +131,16 @@ photo-organizer-ai/
 ## 常见问题
 
 1. **程序无法启动**
+
    - 确保已安装所有依赖
    - 检查 Python 版本（建议 3.8 及以上）
    - Windows 用户可能需要安装 Visual C++ Redistributable
-
 2. **照片未按国家分类**
+
    - 检查照片是否包含 GPS 信息
    - 尝试使用"跳过国家分类"选项
-
 3. **处理速度较慢**
+
    - 这是正常现象，特别是在处理大量照片时
    - 可以先处理少量照片测试
 

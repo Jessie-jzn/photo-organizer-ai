@@ -5,6 +5,16 @@ from PIL.ExifTags import TAGS
 from dateutil.parser import parse
 import shutil
 
+# 支持的图片格式
+SUPPORTED_FORMATS = {
+    # 常见图片格式
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', 
+    # RAW 格式
+    '.raw', '.arw', '.cr2', '.cr3', '.nef', '.nrw', '.dng', '.orf', '.rw2', '.pef', '.raf', '.srw',
+    # 其他格式
+    '.tiff', '.tif', '.heic', '.heif'
+}
+
 class PhotoOrganizer:
     def __init__(self, source_dir, dest_dir):
         """
@@ -33,34 +43,35 @@ class PhotoOrganizer:
         except Exception:
             return datetime.fromtimestamp(os.path.getmtime(image_path))
 
+    def is_supported_image(self, filename):
+        """检查文件是否为支持的图片格式"""
+        return filename.lower().endswith(tuple(SUPPORTED_FORMATS))
+
     def organize_photos(self):
-        """
-        整理照片到目标文件夹
-        """
-        processed = 0
-        total_files = sum(1 for root, _, files in os.walk(self.source_dir)
-                         for file in files
-                         if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')))
-        
-        print(f"开始处理 {total_files} 张图片...")
-        
+        """按时间组织照片"""
         for root, _, files in os.walk(self.source_dir):
-            for filename in files:
-                if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                    file_path = os.path.join(root, filename)
-                    date = self.get_image_date(file_path)
-                    
-                    # 创建年/月文件夹结构
-                    year_dir = os.path.join(self.dest_dir, str(date.year))
-                    month_dir = os.path.join(year_dir, f"{date.month:02d}")
-                    
-                    os.makedirs(month_dir, exist_ok=True)
-                    
-                    # 复制文件到目标位置
-                    dest_path = os.path.join(month_dir, filename)
-                    if not os.path.exists(dest_path):
-                        shutil.copy2(file_path, dest_path)
-                    
-                    processed += 1
-                    if processed % 10 == 0 or processed == total_files:  # 每处理10张图片显示一次进度
-                        print(f"进度: {processed}/{total_files} ({(processed/total_files*100):.1f}%)") 
+            for file in files:
+                if self.is_supported_image(file):
+                    try:
+                        file_path = os.path.join(root, file)
+                        date = self.get_image_date(file_path)
+                        
+                        if date:
+                            # 创建年/月目录
+                            year_dir = os.path.join(self.dest_dir, str(date.year))
+                            month_dir = os.path.join(year_dir, f"{date.month:02d}")
+                            os.makedirs(month_dir, exist_ok=True)
+                            
+                            # 移动文件
+                            shutil.move(file_path, os.path.join(month_dir, file))
+                        else:
+                            # 如果无法获取日期，移动到 unknown 目录
+                            unknown_dir = os.path.join(self.dest_dir, "unknown")
+                            os.makedirs(unknown_dir, exist_ok=True)
+                            shutil.move(file_path, os.path.join(unknown_dir, file))
+                    except Exception as e:
+                        print(f"处理文件 {file} 时出错: {str(e)}")
+                        # 发生错误时移动到 unknown 目录
+                        unknown_dir = os.path.join(self.dest_dir, "unknown")
+                        os.makedirs(unknown_dir, exist_ok=True)
+                        shutil.move(file_path, os.path.join(unknown_dir, file)) 

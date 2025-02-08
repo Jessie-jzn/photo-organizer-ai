@@ -149,10 +149,11 @@ class PhotoOrganizerGUI:
         self.start_button.configure(state='disabled')
         
         # 在新线程中运行处理过程
-        thread = threading.Thread(target=self.process_in_thread)
+        thread = threading.Thread(target=self.process_with_progress)
         thread.start()
         
-    def process_in_thread(self):
+    def process_with_progress(self):
+        """处理照片并显示进度"""
         try:
             process_photos(
                 source_dir=self.source_path.get(),
@@ -162,11 +163,12 @@ class PhotoOrganizerGUI:
                 dup_threshold=int(self.dup_threshold.get()),
                 gui_log_callback=self.log_message
             )
-            # 处理完成后显示提示
+            # 处理完成后显示成功消息
             self.window.after(0, lambda: messagebox.showinfo("完成", "照片处理完成！"))
-        except Exception as e:
-            self.log_message(f"\n错误: {str(e)}")
-            self.window.after(0, lambda: messagebox.showerror("错误", f"处理过程中出现错误：\n{str(e)}"))
+        except Exception as error:  # 将 'e' 改为 'error'
+            # 显示错误消息
+            error_msg = str(error)  # 在这里保存错误信息
+            self.window.after(0, lambda: messagebox.showerror("错误", f"处理过程中出现错误：\n{error_msg}"))
         finally:
             # 重新启用开始按钮
             self.window.after(0, lambda: self.start_button.configure(state='normal'))
