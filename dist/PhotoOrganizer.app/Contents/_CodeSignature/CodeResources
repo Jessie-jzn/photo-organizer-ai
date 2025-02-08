@@ -4,18 +4,18 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/icon.icns</key>
 		<data>
-		eEHOuYpZLB0vKGVIWGZOh5rH8+o=
+		rR3TFT6VGIUcFTcNwj7KsX5/R1s=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/icon.icns</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uQo7VuWRab4Phv4EEGmfQsyqFqDIXZgO8OtgaAMvCzY=
+			FREK2mUK8xktuW1Y9b7axAbKFNTh0Ow9b73OXxH+pB8=
 			</data>
 		</dict>
 	</dict>
