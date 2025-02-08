@@ -1,0 +1,3 @@
+([('PhotoOrganizer',
+   '/Users/jessie.chen/project/photo-organizer-ai/dist/PhotoOrganizer',
+   'EXECUTABLE')],)
