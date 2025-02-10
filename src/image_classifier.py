@@ -33,6 +33,11 @@ class ImageClassifier:
                         'district': address.get('suburb', address.get('district', ''))
                     }
             
+            # 如果没有 GPS 信息，尝试从文件名或目录名推测位置
+            guessed_location = self.guess_location_from_filename(image_path)
+            if guessed_location:
+                return guessed_location
+            
             return {
                 'country': 'unknown_country',
                 'state': 'unknown_state',
@@ -54,6 +59,27 @@ class ImageClassifier:
         m = float(value.values[1].num) / float(value.values[1].den)
         s = float(value.values[2].num) / float(value.values[2].den)
         return d + (m / 60.0) + (s / 3600.0)
+
+    def guess_location_from_filename(self, image_path):
+        """尝试从文件名或目录名推测位置"""
+        # 示例：从文件名或目录名中提取可能的地名
+        # 这里假设文件名或目录名中可能包含地名信息
+        # 例如：/path/to/photos/Paris_2023/photo1.jpg
+        path_parts = os.path.normpath(image_path).split(os.sep)
+        for part in path_parts:
+            try:
+                location = self.geolocator.geocode(part, language='zh')
+                if location:
+                    address = location.raw['address']
+                    return {
+                        'country': address.get('country', 'unknown_country'),
+                        'state': address.get('state', ''),
+                        'city': address.get('city', address.get('county', '')),
+                        'district': address.get('suburb', address.get('district', ''))
+                    }
+            except GeocoderTimedOut:
+                continue
+        return None
 
     def is_supported_image(self, filename):
         """检查文件是否为支持的图片格式"""

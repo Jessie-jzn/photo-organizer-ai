@@ -11,6 +11,8 @@
 - 智能地理信息提取：
   - 从照片的 EXIF 数据中提取 GPS 信息
   - 自动解析为具体的地理位置信息
+  - 使用 OpenStreetMap 的 Nominatim API 增强地理位置准确性
+  - 即使没有 EXIF 数据，也能尝试从文件名或目录名推测地理位置
 - 高效重复照片检测：
   - 多重哈希算法检测（perceptual hash）
   - 智能图片质量评估
@@ -51,15 +53,14 @@
    - 使用感知哈希算法（average hash, difference hash, perceptual hash）
    - 自动处理不同大小和格式的图片
    - 可调节的相似度阈值
-
 2. 质量评估：
 
    - 分辨率对比
    - 文件格式质量
    - 是否包含编辑信息
    - 文件大小分析
-
 3. 处理策略：
+
    - 自动保留最高质量版本
    - 将重复照片移至 duplicates 文件夹
    - 保持原始文件名
@@ -81,12 +82,10 @@
 
    - Windows 用户下载 `PhotoOrganizer.exe`
    - macOS 用户下载 `PhotoOrganizer.app.zip`
-
 2. 运行程序
 
    - Windows：双击 `PhotoOrganizer.exe`
    - macOS：解压后双击 `PhotoOrganizer.app`
-
 3. 在程序界面中：
 
    - 点击"浏览"选择源文件夹（包含要整理的照片的文件夹）
@@ -191,18 +190,16 @@ photo-organizer-ai/
    - 确保已安装所有依赖
    - 检查 Python 版本（建议 3.8 及以上）
    - Windows 用户可能需要安装 Visual C++ Redistributable
-
 2. **照片未按国家分类**
 
    - 检查照片是否包含 GPS 信息
    - 尝试使用"跳过国家分类"选项
-
 3. **处理速度较慢**
 
    - 这是正常现象，特别是在处理大量照片时
    - 可以先处理少量照片测试
-
 4. **重复照片检测较慢**
+
    - 这是正常现象，因为需要进行详细的图片分析
    - 可以调高阈值来加快处理速度
    - 建议分批处理大量照片
@@ -215,13 +212,37 @@ photo-organizer-ai/
 - exifread: EXIF 数据读取
 - geopy: 地理编码
 
-## 许可证
-
-MIT License
-
 ## 性能优化说明
 
 - 使用哈希表加速重复检测
 - 优化的图片比较算法
 - 智能的文件处理策略
 - 详细的进度反馈
+
+## MIT License许可证
+
+本项目基于 MIT 许可证开源。您可以自由使用、修改和分发本软件，但需保留原始版权声明和许可证文本。具体条款如下：
+
+```
+MIT License
+
+Copyright (c) 2023 Jessie
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
