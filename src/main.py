@@ -40,7 +40,7 @@ def move_duplicates_to_folder(duplicates, dest_dir):
     return duplicates_dir
 
 def process_photos(source_dir, dest_dir=None, skip_country=False, skip_location=False, 
-                  dup_threshold=2, gui_log_callback=print, preview_callback=None):
+                  dup_threshold=2, skip_face_recognition=False, gui_log_callback=print, preview_callback=None):
     """
     处理照片的主函数
     :param source_dir: 源文件夹
@@ -48,6 +48,7 @@ def process_photos(source_dir, dest_dir=None, skip_country=False, skip_location=
     :param skip_country: 是否跳过国家分类
     :param skip_location: 是否跳过地点分类
     :param dup_threshold: 重复检测阈值
+    :param skip_face_recognition: 是否跳过人脸识别
     :param gui_log_callback: GUI日志回调函数
     :param preview_callback: 预览回调函数，接收 (image_path, status) 参数
     """
@@ -107,6 +108,12 @@ def process_photos(source_dir, dest_dir=None, skip_country=False, skip_location=
                     preview_callback(photo, "按地点整理")
                 organizer.organize_by_location_details(photo)
         
+        if not skip_face_recognition:
+            # 人脸识别分类
+            gui_log_callback("\n开始按人脸分类...")
+            classifier = ImageClassifier(base_dir=dest_dir)
+            classifier.classify_by_people(dest_dir)
+        
         gui_log_callback("\n照片处理完成！")
         return dest_dir
         
@@ -127,13 +134,14 @@ def remove_empty_dirs(directory):
                 print(f"删除空文件夹 {name} 时出错: {str(e)}")
 
 def main():
-    # 原来的命令行处理代码
-    parser = argparse.ArgumentParser(description="照片智能整理工具")
-    parser.add_argument("--source", type=str, required=True, help="源文件夹路径")
-    parser.add_argument("--dest", type=str, help="目标文件夹路径")
-    parser.add_argument("--skip_country", action="store_true", help="跳过国家分类")
-    parser.add_argument("--skip_location", action="store_true", help="跳过地点分类")
-    parser.add_argument("--dup_threshold", type=int, default=2, help="重复检测阈值")
+    parser = argparse.ArgumentParser(description="智能照片整理工具")
+    parser.add_argument('--source', required=True, help='源文件夹路径')
+    parser.add_argument('--dest', help='目标文件夹路径')
+    parser.add_argument('--skip_country', action='store_true', help='跳过国家分类')
+    parser.add_argument('--skip_location', action='store_true', help='跳过地点分类')
+    parser.add_argument('--dup_threshold', type=int, default=2, help='重复检测阈值')
+    parser.add_argument('--skip_face_recognition', action='store_true', help='跳过人脸识别')
+    
     args = parser.parse_args()
     
     try:
@@ -142,7 +150,8 @@ def main():
             dest_dir=args.dest,
             skip_country=args.skip_country,
             skip_location=args.skip_location,
-            dup_threshold=args.dup_threshold
+            dup_threshold=args.dup_threshold,
+            skip_face_recognition=args.skip_face_recognition
         )
         return 0
     except Exception as e:

@@ -9,10 +9,16 @@ class PhotoOrganizerGUI:
         self.window = tk.Tk()
         self.window.title("Photo Organizer AI")
         self.window.geometry("800x600")
-        
+        # self.window.iconphoto(False, tk.PhotoImage(file='resources/icon.ico'))  # 添加图标
+
         # 设置样式
         style = ttk.Style()
-        style.configure("Custom.TFrame", background="#f0f0f0")
+        style.theme_use('clam')  # 使用现代主题
+        style.configure("TButton", padding=6, relief="flat", background="#ccc")
+        style.configure("TCheckbutton", background="#f0f0f0")
+        style.configure("TLabelFrame", background="#f0f0f0", font=('Arial', 10, 'bold'))
+        style.configure("TLabel", background="#f0f0f0", font=('Arial', 10))
+        style.configure("TEntry", font=('Arial', 10))
         
         # 创建主框架
         self.main_frame = ttk.Frame(self.window, padding="10")
@@ -63,6 +69,11 @@ class PhotoOrganizerGUI:
         self.skip_location = tk.BooleanVar()
         ttk.Checkbutton(options_frame, text="跳过地点分类", 
                        variable=self.skip_location).pack(side=tk.LEFT, padx=5)
+         
+        # 跳过人脸识别
+        self.skip_face_recognition = tk.BooleanVar()
+        ttk.Checkbutton(options_frame, text="跳过人脸识别", 
+                       variable=self.skip_face_recognition).pack(side=tk.LEFT, padx=5)
         
         # 重复检测阈值
         threshold_frame = ttk.Frame(options_frame)
@@ -70,6 +81,7 @@ class PhotoOrganizerGUI:
         ttk.Label(threshold_frame, text="重复检测阈值:").pack(side=tk.LEFT)
         self.dup_threshold = tk.StringVar(value="2")
         ttk.Entry(threshold_frame, textvariable=self.dup_threshold, width=5).pack(side=tk.LEFT, padx=5)
+       
 
     def create_progress_area(self):
         """创建进度显示区域"""
@@ -81,7 +93,7 @@ class PhotoOrganizerGUI:
         self.progress.pack(fill=tk.X, pady=5)
         
         # 日志显示
-        self.log_text = tk.Text(progress_frame, height=10, wrap=tk.WORD)
+        self.log_text = tk.Text(progress_frame, height=10, wrap=tk.WORD, font=('Arial', 10))
         self.log_text.pack(fill=tk.BOTH, expand=True, pady=5)
         
         # 滚动条
@@ -135,6 +147,7 @@ class PhotoOrganizerGUI:
                 skip_country=self.skip_country.get(),
                 skip_location=self.skip_location.get(),
                 dup_threshold=int(self.dup_threshold.get()),
+                skip_face_recognition=self.skip_face_recognition.get(),
                 gui_log_callback=self.log_message
             )
             self.window.after(0, lambda: messagebox.showinfo("完成", "照片处理完成！"))

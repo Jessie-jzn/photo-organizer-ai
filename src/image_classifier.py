@@ -6,6 +6,7 @@ import shutil
 from PIL import Image
 import numpy as np
 from photo_organizer import SUPPORTED_FORMATS
+import face_recognition
 
 class ImageClassifier:
     def __init__(self, base_dir):
@@ -150,10 +151,37 @@ class ImageClassifier:
                         os.makedirs(unknown_dir, exist_ok=True)
                         shutil.move(file_path, os.path.join(unknown_dir, file))
 
-    def classify_by_people(self, year_month_dir):
-        """按人物数量对指定目录下的图片进行分类"""
-        print(f"\n暂时跳过人物分类: {year_month_dir}")
-        return 
+    def detect_faces(self, image_path):
+        """使用 face_recognition 检测图片中的人脸"""
+        try:
+            # 加载图片
+            image = face_recognition.load_image_file(image_path)
+            # 使用 HOG 模型查找图片中的所有人脸
+            face_locations = face_recognition.face_locations(image, model="hog")
+            return len(face_locations) > 0
+        except Exception as e:
+            print(f"检测人脸时出错 {image_path}: {e}")
+            return False
+
+    def classify_by_people(self, source_dir):
+        """按是否包含人脸对图片进行分类"""
+        print("\n开始按人脸分类...")
+        people_dir = os.path.join(source_dir, "people")
+        no_people_dir = os.path.join(source_dir, "no_people")
+        os.makedirs(people_dir, exist_ok=True)
+        os.makedirs(no_people_dir, exist_ok=True)
+
+        for root, _, files in os.walk(source_dir):
+            for file in files:
+                if self.is_supported_image(file):
+                    file_path = os.path.join(root, file)
+                    try:
+                        if self.detect_faces(file_path):
+                            shutil.move(file_path, os.path.join(people_dir, file))
+                        else:
+                            shutil.move(file_path, os.path.join(no_people_dir, file))
+                    except Exception as e:
+                        print(f"处理文件 {file} 时出错: {str(e)}")
 
     def _sanitize_path(self, path_component):
         """清理路径组件，移除或替换非法字符"""
