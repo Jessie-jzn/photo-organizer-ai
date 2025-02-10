@@ -3,13 +3,15 @@
 > 一个智能照片整理工具，可以按照国家、时间、城市和地区对照片进行自动分类，并提供高效的重复照片检测功能。提供图形界面，操作简单直观。
 
 <div>
-    <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python">
+    <img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python">
     <img src="https://img.shields.io/badge/CUDA-11.0+-green.svg" alt="CUDA">
     <img src="https://img.shields.io/badge/PyQt-5.15+-orange.svg" alt="PyQt">
     <img src="https://img.shields.io/badge/InsightFace-0.7+-purple.svg" alt="InsightFace">
     <img src="https://img.shields.io/badge/nudenet-0.1+-red.svg" alt="nudenet">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
 </div>
+
+![1739181289058](images/README/1739181289058.png)
 
 ## 功能特点
 
@@ -63,14 +65,12 @@
    - 使用感知哈希算法（average hash, difference hash, perceptual hash）
    - 自动处理不同大小和格式的图片
    - 可调节的相似度阈值
-
 2. 质量评估：
 
    - 分辨率对比
    - 文件格式质量
    - 是否包含编辑信息
    - 文件大小分析
-
 3. 处理策略：
 
    - 自动保留最高质量版本
@@ -94,12 +94,10 @@
 
    - Windows 用户下载 `PhotoOrganizer.exe`
    - macOS 用户下载 `PhotoOrganizer.app.zip`
-
 2. 运行程序
 
    - Windows：双击 `PhotoOrganizer.exe`
    - macOS：解压后双击 `PhotoOrganizer.app`
-
 3. 在程序界面中：
 
    - 点击"浏览"选择源文件夹（包含要整理的照片的文件夹）
@@ -205,17 +203,14 @@ photo-organizer-ai/
    - 确保已安装所有依赖
    - 检查 Python 版本（建议 3.8 及以上）
    - Windows 用户可能需要安装 Visual C++ Redistributable
-
 2. **照片未按国家分类**
 
    - 检查照片是否包含 GPS 信息
    - 尝试使用"跳过国家分类"选项
-
 3. **处理速度较慢**
 
    - 这是正常现象，特别是在处理大量照片时
    - 可以先处理少量照片测试
-
 4. **重复照片检测较慢**
 
    - 这是正常现象，因为需要进行详细的图片分析
