@@ -748,6 +748,22 @@
 		<data>
 		V6dCo676xpBWcBlBUrUR8yoby4c=
 		</data>
+		<key>Resources/face_recognition_models/models/dlib_face_recognition_resnet_model_v1.dat</key>
+		<data>
+		feZDCDsJkszIpkSY7WoROMz8nk4=
+		</data>
+		<key>Resources/face_recognition_models/models/mmod_human_face_detector.dat</key>
+		<data>
+		e0TMqU+saNFpzHY+DPzD+/euegY=
+		</data>
+		<key>Resources/face_recognition_models/models/shape_predictor_5_face_landmarks.dat</key>
+		<data>
+		7e7kPG/ObkyFXMY2rWEC8FKxWUk=
+		</data>
+		<key>Resources/face_recognition_models/models/shape_predictor_68_face_landmarks.dat</key>
+		<data>
+		x7DgeApP2hgPdarfZUg4wYZu5fs=
+		</data>
 		<key>Resources/icon.icns</key>
 		<data>
 		rR3TFT6VGIUcFTcNwj7KsX5/R1s=
@@ -1048,6 +1064,11 @@
 		<dict>
 			<key>symlink</key>
 			<string>../Resources/base_library.zip</string>
+		</dict>
+		<key>Frameworks/face_recognition_models</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Resources/face_recognition_models</string>
 		</dict>
 		<key>Frameworks/lib-dynload/_asyncio.cpython-313-darwin.so</key>
 		<dict>
@@ -4018,6 +4039,34 @@
 			<key>hash2</key>
 			<data>
 			+r60xZL7XR9XB+0JQag8kfaaKD9g2kI/BGUuvvanybM=
+			</data>
+		</dict>
+		<key>Resources/face_recognition_models/models/dlib_face_recognition_resnet_model_v1.dat</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VVM7KKlYAKVRulRrpi/mliXH6VpwYcM4rf/q0IcZ2jA=
+			</data>
+		</dict>
+		<key>Resources/face_recognition_models/models/mmod_human_face_detector.dat</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TLGTk+L7rysWCakxmtU4ZhjIhqYjTsG5cfPofIXYf+Y=
+			</data>
+		</dict>
+		<key>Resources/face_recognition_models/models/shape_predictor_5_face_landmarks.dat</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			xLHpgEeScH06QFwsFqgKICaeZnUCH2SkHTD/+vvEGIg=
+			</data>
+		</dict>
+		<key>Resources/face_recognition_models/models/shape_predictor_68_face_landmarks.dat</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+9wsuA65qnp1hnLL/doyumMA7+m25seimf9+c2sRuS8=
 			</data>
 		</dict>
 		<key>Resources/icon.icns</key>
